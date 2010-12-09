@@ -6,7 +6,7 @@ from funkload.FunkLoadTestCase import FunkLoadTestCase
 
 
 class QA(FunkLoadTestCase):
-    """ This test uses the AnonPlone.conf configuration file
+    """ This test uses the QA.conf configuration file
     """
     total = 30
 

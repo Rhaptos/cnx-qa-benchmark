@@ -28,6 +28,9 @@ mklogs:
 qa_test: mklogs
 	bin/fl-run-test test_QA.py --simple-fetch -vd $(FLOPS)
 
+qa_test_auth: mklogs
+	bin/fl-run-test test_QAauth.py -vd $(FLOPS)
+
 qa_test_full: mklogs
 	bin/fl-run-test test_QAfull.py -vd $(FLOPS)
 
@@ -38,6 +41,12 @@ prod_test: mklogs
 qa_bench: mklogs
 	#$(MONCTL) restart
 	-bin/fl-run-bench test_QA.py QA.test_loads
+	#-bin/fl-build-report --html -o reports logs/qa-bench.xml
+	#$(MONCTL) stop
+
+qa_bench_auth: mklogs
+	#$(MONCTL) restart
+	-bin/fl-run-bench test_QAauth.py QAauth.test_loads
 	#-bin/fl-build-report --html -o reports logs/qa-bench.xml
 	#$(MONCTL) stop
 

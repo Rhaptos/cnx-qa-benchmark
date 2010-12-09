@@ -48,3 +48,13 @@ http://cnx.org/content/m13384/latest/19e027b78a4e0847ce748640ea3fcb13
 http://cnx.org/content/m13384/latest/58a7152a4368bfcf08f1afead3b9514e
 http://cnx.org/content/m13384/latest/dabe8c0d79a42bdb56e7f9a596cda5cd
 http://cnx.org/content/m13384/latest/e7d4ba661fb1d022562314543935e3cb
+http://cnx.org/lenses
+http://cnx.org/lenses/atom
+http://cnx.org/lenses/ncpea/endorsements
+http://cnx.org/lenses/ncpea/endorsements/atom
+http://cnx.org/lenses/ricescholarship/affiliation
+http://cnx.org/lenses/ricescholarship/affiliation/atom
+http://cnx.org/lenses/siyavula/getintphasemaths
+http://cnx.org/lenses/siyavula/getintphasemaths/atom
+http://cnx.org/lenses/siyavula/getsenphasens
+http://cnx.org/lenses/siyavula/getsenphasens/atom
