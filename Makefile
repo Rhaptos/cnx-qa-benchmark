@@ -53,7 +53,7 @@ qa_bench_auth: mklogs
 qa_bench_full: mklogs
 	#$(MONCTL) restart
 	-bin/fl-run-bench --accept-invalid-links -D 5400 test_QAfull.py QA.test_loads
-	#-bin/fl-build-report --html -o reports logs/qa-bench.xml
+	-bin/fl-build-report --html -o reports logs/qa-bench.xml
 	#$(MONCTL) stop
 
 prod_bench: mklogs
