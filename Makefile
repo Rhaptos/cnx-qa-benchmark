@@ -40,7 +40,7 @@ prod_test: mklogs
 # benching
 qa_bench: mklogs
 	#$(MONCTL) restart
-	-bin/fl-run-bench test_QA.py QA.test_loads
+	-bin/fl-run-bench --accept-invalid-links test_QA.py QA.test_loads
 	#-bin/fl-build-report --html -o reports logs/qa-bench.xml
 	#$(MONCTL) stop
 
