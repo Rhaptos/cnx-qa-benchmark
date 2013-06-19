@@ -9,7 +9,13 @@ MONCTL := bin/fl-monitor-ctl monitor.conf
 MONCTL_CARVING := bin/fl-monitor-ctl monitor-carving.conf
 MONCTL_CHOPPING := bin/fl-monitor-ctl monitor-chopping.conf
 MONCTL_PARING := bin/fl-monitor-ctl monitor-paring.conf
+MONCTL_BOWIE := bin/fl-monitor-ctl monitor-bowie.conf
 MONCTL_WAKIZASHI := bin/fl-monitor-ctl monitor-wakizashi.conf
+MONCTL_FRONTEND1 := bin/fl-monitor-ctl monitor-frontend1.conf
+MONCTL_FRONTEND2 := bin/fl-monitor-ctl monitor-frontend2.conf
+MONCTL_FRONTEND3 := bin/fl-monitor-ctl monitor-frontend3.conf
+MONCTL_FRONTEND4 := bin/fl-monitor-ctl monitor-frontend4.conf
+MONCTL_BALLPOINT := bin/fl-monitor-ctl monitor-ballpoint.conf
 
 
 ifdef URL
@@ -37,6 +43,9 @@ qa_test_full: mklogs
 prod_test: mklogs
 	bin/fl-run-test test_Prod.py -vd $(FLOPS)
 
+student_test: mklogs
+	bin/fl-run-test test_Students.py -vd $(FLOPS)
+
 # benching
 qa_bench: mklogs
 	#$(MONCTL) restart
@@ -58,8 +67,14 @@ qa_bench_full: mklogs
 
 prod_bench: mklogs
 	#$(MONCTL) restart
-	-bin/fl-run-bench test_Prod.py Prod.test_loads
+	-bin/fl-run-bench --accept-invalid-links test_Prod.py Prod.test_loads
 	-bin/fl-build-report --html -o reports logs/prod-bench.xml
+	#$(MONCTL) stop
+
+student_bench: mklogs
+	#$(MONCTL) restart
+	-bin/fl-run-bench --accept-invalid-links test_Students.py Students.test_loads
+	-bin/fl-build-report --html -o reports logs/student-bench.xml
 	#$(MONCTL) stop
 
 # monitor ctl
@@ -87,11 +102,47 @@ start_monitor_paring:
 stop_monitor_paring:
 	-$(MONCTL_PARING) stop
 
+start_monitor_bowie:
+	$(MONCTL_BOWIE) start
+
+stop_monitor_bowie:
+	-$(MONCTL_BOWIE) stop
+
 start_monitor_wakizashi:
 	$(MONCTL_WAKIZASHI) start
 
 stop_monitor_wakizashi:
 	-$(MONCTL_WAKIZASHI) stop
+
+start_monitor_frontend1:
+	$(MONCTL_FRONTEND1) start
+
+stop_monitor_frontend1:
+	-$(MONCTL_FRONTEND1) stop
+
+start_monitor_frontend2:
+	$(MONCTL_FRONTEND2) start
+
+stop_monitor_frontend2:
+	-$(MONCTL_FRONTEND2) stop
+
+start_monitor_frontend3:
+	$(MONCTL_FRONTEND3) start
+
+stop_monitor_frontend3:
+	-$(MONCTL_FRONTEND3) stop
+
+start_monitor_frontend4:
+	$(MONCTL_FRONTEND4) start
+
+stop_monitor_frontend4:
+	-$(MONCTL_FRONTEND4) stop
+
+start_monitor_ballpoint:
+	$(MONCTL_BALLPOINT) start
+
+stop_monitor_ballpoint:
+	-$(MONCTL_BALLPOINT) stop
 
 # credential ctl
 start_credential:
