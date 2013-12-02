@@ -1,0 +1,8 @@
+2013-06-17 14:28:07,861 INFO Init XML/RPC server localhost:8008.
+2013-06-17 14:28:07,867 INFO XML/RPC server pid=458 running.
+2013-06-17 14:28:20,612 INFO Init XML/RPC server 128.42.169.18:8008.
+2013-06-17 14:59:08,056 INFO stopServer request.
+2013-06-17 14:59:08,557 INFO XML/RPC server pid=458 stopped.
+2013-06-17 14:59:11,516 INFO Init XML/RPC server localhost:8008.
+2013-06-17 14:59:11,523 INFO XML/RPC server pid=3096 running.
+2013-06-20 12:10:51,526 INFO Init XML/RPC server localhost:8008.
