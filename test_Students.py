@@ -31,10 +31,10 @@ class Students(FunkLoadTestCase):
             cidsvers.append(content_info[id])
         
         uuidsvers=[]
-        modurl_template=self.server_url+'/content/{}/latest/?collection={}/latest'
-        pdfurl_template=self.server_url+'/content/{}/{}/pdf'
-        rewrite_url_template=self.server_url+'/contents/{}@{}:{}'
-        rewrite_exporturl_template=self.server_url+'/exports/{}@{}.{}'
+        modurl_template=self.server_url+'/content/{0}/latest/?collection={1}/latest'
+        pdfurl_template=self.server_url+'/content/{0}/{1}/pdf'
+        rewrite_url_template=self.server_url+'/contents/{0}@{1}:{2}'
+        rewrite_exporturl_template=self.server_url+'/exports/{0}@{1}.{2}'
 
         self.modurls = []
         self.rewriteurls = []
