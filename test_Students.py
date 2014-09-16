@@ -11,7 +11,7 @@ class Students(FunkLoadTestCase):
     """
 
     def setUp(self):
-        """Setting up test, in current case just setting the server url."""
+        """Setting up test, loading and parsing content ids of various sorts"""
         self.logd("setUp")
         self.label = "Anonymous Tests (Students)"
         self.server_url = self.conf_get('main', 'url')
@@ -31,10 +31,10 @@ class Students(FunkLoadTestCase):
             cidsvers.append(content_info[id])
         
         uuidsvers=[]
-        modurl_template=self.server_url+'/content/{}/latest/?collection={}/latest'
-        pdfurl_template=self.server_url+'/content/{}/{}/pdf'
-        rewrite_url_template=self.server_url+'/content/{}@{}:{}'
-        rewrite_exporturl_template=self.server_url+'/exports/{}@{}.{}'
+        modurl_template=self.server_url+'/content/{0}/latest/?collection={1}/latest'
+        pdfurl_template=self.server_url+'/content/{0}/{1}/pdf'
+        rewrite_url_template=self.server_url+'/contents/{0}@{1}:{2}'
+        rewrite_exporturl_template=self.server_url+'/exports/{0}@{1}.{2}'
 
         self.modurls = []
         self.rewriteurls = []
@@ -43,25 +43,52 @@ class Students(FunkLoadTestCase):
         for c,v,u,uv in cidsvers:
             self.pdfurls.append(pdfurl_template.format(c,v))
             self.exporturls.append(rewrite_exporturl_template.format(u,uv,'pdf'))
-            self.exporturls.append(rewrite_exporturl_template.format(u,uv,'pdf'))
+            self.exporturls.append(rewrite_exporturl_template.format(u,uv,'epub'))
             r = requests.get(self.legacy_server_url+'/content/%s/latest/containedModuleIds' % c)
             mids=json.loads(r.content.replace("'",'"'))
             for i,m in enumerate(mids):
                 self.modurls.append(modurl_template.format(m,c))
                 self.rewriteurls.append(rewrite_url_template.format(u,uv,i))
+        with open('rewrite_urls.txt','w') as file:
+            file.write('\n'.join(self.rewriteurls))
+            file.write('\n')
 
+        with open('export_urls.txt','w') as file:
+            file.write('\n'.join(self.exporturls))
+            file.write('\n')
+
+        with open (self.conf_get('main','urls_json')) as jsonfile:
+            crawled_urls = json.load(jsonfile)['content']
+            self.json_pages = {}
+            for page in crawled_urls:
+                self.json_pages[page['url']] = page
+            self.rewriteurls = self.json_pages.keys()
+        
+    def _extractPageURLs(self,url):
+        """takes a top of page URL, returns list of URLs to load"""
+        urls = []
+        page = self.json_pages[url]
+        for key in page.keys():
+            if key == 'url':
+                urls.append(page[key])
+            else:
+                urls.extend(page[key])
+        return urls
+            
 
     def _browseURL(self):
         server_url = self.server_url
 
         # Model a student: either download a PDF 10%, or read 3 consecutive pages 
         if random.random() < 0.1:
-            urls = [random.choice(self.exporturls)]
+            url = random.choice(self.exporturls)
+            self.get(url, description="Get %s" % url)
         else:
             start = random.choice(xrange(len(self.rewriteurls)-2))
-            urls = self.rewriteurls[start:start+3]
-        for url in urls:
-            self.get(url, description="Get %s" % url)
+            page_urls = self.rewriteurls[start:start+3]
+            for page in page_urls:
+                for url in self._extractPageURLs(page):
+                    self.get(url, description="Get %s" % url)
 
     def test_loads(self):
         """Loads some URLs and execute some searches."""
